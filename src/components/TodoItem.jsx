@@ -1,55 +1,24 @@
-// ============================================
-// components/TodoItem.jsx
-// 
-// 🎯 HOOK: useTransition
-// 📝 WORLD-CLASS PATTERN: Non-blocking UI Updates
-// 
-// BEST PRACTICE: Use useTransition for operations that:
-// 1. Take time (API calls, heavy computations)
-// 2. Should not block user interactions
-// 3. Need visual feedback while processing
-// ============================================
-
-import React, { useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { Trash2, Edit2, Check, X, Loader } from 'lucide-react';
 
 export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
-
-    // ============================================
-    // useTransition: Keep UI responsive
-    // isPending - true while transition is running
-    // startTransition - wrap non-urgent updates
-    // ============================================
     const [isPending, startTransition] = useTransition();
-
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(todo.text);
-
     const isOptimistic = todo.id.toString().startsWith('temp-');
 
-    // ============================================
-    // WORLD-CLASS PATTERN: Transition wrapper for async operations
-    // ============================================
+
     const handleToggle = () => {
-        startTransition(() => {
-            // Mark as non-urgent - React keeps UI responsive
-            onToggle(todo.id);
-        });
+        startTransition(() => { onToggle(todo.id) });
     };
 
     const handleDelete = () => {
-        startTransition(() => {
-            onDelete(todo.id);
-        });
+        startTransition(() => { onDelete(todo.id) });
     };
 
     const handleSave = () => {
         if (!editText.trim()) return;
-
-        startTransition(() => {
-            onUpdate(todo.id, editText);
-        });
-
+        startTransition(() => { onUpdate(todo.id, editText) });
         setIsEditing(false);
     };
 
@@ -97,8 +66,8 @@ export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
                 <div className="flex-1 flex items-center gap-3 min-w-0">
                     <span
                         className={`text-lg break-words ${todo.completed
-                                ? 'line-through text-gray-400'
-                                : 'text-gray-800'
+                            ? 'line-through text-gray-400'
+                            : 'text-gray-800'
                             }`}
                         onDoubleClick={() => !isOptimistic && !isPending && setIsEditing(true)}
                         title="Double-click to edit"

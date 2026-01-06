@@ -1,19 +1,8 @@
-// ============================================
-// components/NetworkStatus.jsx
-// 
-// 🎯 HOOK: useSyncExternalStore
-// 📝 PURPOSE: Show online/offline status
-// 
-// This connects React to browser's navigator.onLine
-// ============================================
-
-import React, { useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 import { Wifi, WifiOff } from 'lucide-react';
 
 export const NetworkStatus = () => {
-    // Connect to browser's online/offline events
     const isOnline = useSyncExternalStore(
-        // 1. Subscribe: Listen to browser events
         (callback) => {
             window.addEventListener('online', callback);
             window.addEventListener('offline', callback);

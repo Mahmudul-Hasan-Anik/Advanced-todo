@@ -1,14 +1,3 @@
-// ============================================
-// components/SubmitButton.jsx
-// 
-// 🎯 HOOK: useFormStatus (React 19 - simulated here)
-// 📝 PURPOSE: Show loading state on submit button
-// 
-// Note: Real useFormStatus only works with <form action={}>
-// We're simulating the same behavior
-// ============================================
-
-import React from 'react';
 import { Loader, Plus } from 'lucide-react';
 
 export const SubmitButton = ({ isPending, disabled }) => {

@@ -1,10 +1,6 @@
 export const HooksExplanation = () => {
     return (
         <div className="mt-8 bg-white rounded-2xl shadow-xl p-8">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">
-                🎓 World-Class React Patterns
-            </h3>
-
             <div className="space-y-6">
 
                 {/* useSyncExternalStore */}

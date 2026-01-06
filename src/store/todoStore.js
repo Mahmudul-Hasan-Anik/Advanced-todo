@@ -1,5 +1,4 @@
 export const createTodoStore = () => {
-    // Private state - not directly accessible
     let listeners = new Set();
     let todos = [];
 

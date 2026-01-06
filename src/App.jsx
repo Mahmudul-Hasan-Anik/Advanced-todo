@@ -1,19 +1,4 @@
-// ============================================
-// App.jsx - Main Component
-// 
-// 🎯 HOOKS DEMONSTRATED:
-// 1. useSyncExternalStore - Sync with localStorage
-// 2. useOptimistic - Instant UI updates
-// 3. useTransition - Non-blocking updates
-//
-// 📝 WORLD-CLASS PATTERNS:
-// - Optimistic updates for all mutations
-// - Automatic rollback on errors
-// - Non-blocking UI during async operations
-// - Clear visual feedback for all states
-// ============================================
-
-import React, { useState, useOptimistic, useTransition, useSyncExternalStore } from 'react';
+import { useState, useOptimistic, useTransition, useSyncExternalStore } from 'react';
 import { Database, X } from 'lucide-react';
 
 import { todoStore } from './store/todoStore';
@@ -25,45 +10,19 @@ import { TodoItem } from './components/TodoItem';
 import { HooksExplanation } from './components/HooksExplanation';
 
 export default function App() {
-
-  // ============================================
-  // 1️⃣ useSyncExternalStore
-  // PATTERN: Subscribe to external data source
-  // ============================================
   const storedTodos = useSyncExternalStore(
     todoStore.subscribe,
     todoStore.getSnapshot,
     () => [] // Server-side fallback
   );
 
-  // ============================================
-  // 2️⃣ useOptimistic
-  // PATTERN: Optimistic UI updates
-  // Shows changes immediately, rolls back on error
-  // ============================================
-  const [optimisticTodos, addOptimisticTodo] = useOptimistic(
-    storedTodos,
-    (state, newTodo) => [...state, newTodo]
-  );
 
-  // ============================================
-  // 3️⃣ useTransition
-  // PATTERN: Non-blocking state updates
-  // Keeps UI responsive during async operations
-  // ============================================
+  const [optimisticTodos, addOptimisticTodo] = useOptimistic(storedTodos, (state, newTodo) => [...state, newTodo]);
   const [isPending, startTransition] = useTransition();
-
-  // UI state
   const [toast, setToast] = useState(null);
+  const showToast = (message, type = 'success') => { setToast({ message, type }) };
 
-  const showToast = (message, type = 'success') => {
-    setToast({ message, type });
-  };
-
-  // ============================================
   // ADD TODO
-  // WORLD-CLASS PATTERN: Optimistic + Transition
-  // ============================================
   const handleAddTodo = async (text) => {
     const tempTodo = {
       id: 'temp-' + Date.now(),
@@ -93,7 +52,6 @@ export default function App() {
 
   // ============================================
   // TOGGLE TODO
-  // WORLD-CLASS PATTERN: Optimistic update with rollback
   // ============================================
   const handleToggleTodo = async (id) => {
     const original = [...storedTodos];
@@ -118,7 +76,6 @@ export default function App() {
 
   // ============================================
   // DELETE TODO
-  // WORLD-CLASS PATTERN: Optimistic delete with rollback
   // ============================================
   const handleDeleteTodo = async (id) => {
     const original = [...storedTodos];
@@ -139,7 +96,6 @@ export default function App() {
 
   // ============================================
   // UPDATE TODO
-  // WORLD-CLASS PATTERN: Optimistic update
   // ============================================
   const handleUpdateTodo = async (id, newText) => {
     const original = [...storedTodos];

@@ -1,11 +1,4 @@
-// ============================================
-// components/Toast.jsx
-// 
-// Simple notification popup
-// (No special hooks - just regular React)
-// ============================================
-
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { AlertCircle } from 'lucide-react';
 
 export const Toast = ({ message, type, onClose }) => {
