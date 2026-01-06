@@ -1,5 +1,3 @@
-# 🎯 World-Class React Hooks - Complete Guide
-
 ## The Three Essential Hooks
 
 ---
